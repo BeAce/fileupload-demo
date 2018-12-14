@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form">
+      <input type="file" id="file" name="file" />
+      <button type="submit" id="btn">上传</button>
+    </form>
+    <script>
+      const btn = document.getElementById('btn');
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const file = document.getElementById('file').files[0];
+        const form = new FormData();
+        form.append('file', file);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:8000/api/upload');
+        xhr.onreadystatechange = function() {
+          console.log(xhr);
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              alert('upload complete');
+            }
+          }
+        };
+        xhr.send(form);
+      });
+    </script>
+  </body>
+</html>
